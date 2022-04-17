@@ -1,10 +1,10 @@
-<!DOCTYPE html><!--  Last Published: Tue Mar 22 2022 21:43:07 GMT+0000 (Coordinated Universal Time)  -->
-<html data-wf-page="61f9932d6de9625f86cab2a7" data-wf-site="5e713befc4e6954b4d669bfa">
+<!DOCTYPE html><!--  Last Published: Tue Apr 12 2022 19:05:13 GMT+0000 (Coordinated Universal Time)  -->
+<html data-wf-page="62146238fce59b738163f47b" data-wf-site="5e713befc4e6954b4d669bfa">
 <head>
   <meta charset="utf-8">
-  <title>Articles</title>
-  <meta content="Articles" property="og:title">
-  <meta content="Articles" property="twitter:title">
+  <title>cms-modules</title>
+  <meta content="cms-modules" property="og:title">
+  <meta content="cms-modules" property="twitter:title">
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta content="google-site-verification=RD2aMz-tKYfiHXEAm9QDzxUDpf7RNsVOR9_U0a7JETc" name="google-site-verification">
   <link href="../css/normalize.css" rel="stylesheet" type="text/css">
@@ -183,70 +183,104 @@
 </style>
 </head>
 <body>
-  <div class="navbar_container">
-    <div class="navigation-grid">
-      <div data-animation="default" class="navigation-bar w-nav" data-easing2="ease" data-easing="ease" data-collapse="medium" role="banner" data-no-scroll="1" data-duration="400" id="w-node-_67af1771-67eb-98e1-b886-fdcf0fa787a5-0fa787a4" data-doc-height="1">
-        <a href="../index.html" class="navigation-logo w-nav-brand"><img src="../images/INCOME_MOV_LOGO_FULL-01.png" sizes="100vw" srcset="../images/INCOME_MOV_LOGO_FULL-01-p-500.png 500w, ../images/INCOME_MOV_LOGO_FULL-01-p-800.png 800w, ../images/INCOME_MOV_LOGO_FULL-01-p-1080.png 1080w, ../images/INCOME_MOV_LOGO_FULL-01-p-1600.png 1600w, ../images/INCOME_MOV_LOGO_FULL-01-p-2000.png 2000w, ../images/INCOME_MOV_LOGO_FULL-01.png 2802w" alt="" class="navigation-image-logo"></a>
-        <nav role="navigation" class="navigation-link-container w-nav-menu">
-          <a data-w-id="67af1771-67eb-98e1-b886-fdcf0fa787a9" href="../index.html" class="main-nav-item top w-inline-block">
-            <div>home</div>
-            <div class="nav-underline">
-              <div class="nav-underline-anim"></div>
-            </div>
-          </a>
-          <a data-w-id="67af1771-67eb-98e1-b886-fdcf0fa787ae" href="../about.html" class="main-nav-item top w-inline-block">
-            <div>About</div>
-            <div class="nav-underline">
-              <div class="nav-underline-anim"></div>
-            </div>
-          </a>
-          <a data-w-id="67af1771-67eb-98e1-b886-fdcf0fa787b3" href="../our-work.html" class="main-nav-item top w-inline-block">
-            <div>Our Work</div>
-            <div class="nav-underline">
-              <div class="nav-underline-anim"></div>
-            </div>
-          </a>
-          <a data-w-id="559162e3-3880-1bc6-9422-b53a11dee849" href="../events.html" class="main-nav-item top w-inline-block">
-            <div>Events</div>
-            <div class="nav-underline">
-              <div class="nav-underline-anim"></div>
-            </div>
-          </a>
-          <a data-w-id="d686ab21-3275-261a-b506-bf7924c4fc2d" href="../press.html" class="main-nav-item top w-inline-block">
-            <div>PRESS</div>
-            <div class="nav-underline">
-              <div class="nav-underline-anim"></div>
-            </div>
-          </a>
-          <a data-w-id="67af1771-67eb-98e1-b886-fdcf0fa787b8" href="../volunteer.html" class="main-nav-item top w-inline-block">
-            <div>volunteer</div>
-            <div class="nav-underline">
-              <div class="nav-underline-anim"></div>
-            </div>
-          </a>
-          <a href="https://secure.actblue.com/donate/income-movement-foundation" target="_blank" class="link-btn-black top w-inline-block">
-            <div class="text-block-8">donate</div>
-          </a>
-        </nav>
-        <div class="menu-button-2 w-nav-button">
-          <div class="icon-4 w-icon-nav-menu"></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="page-wrapper">
-    <div class="section-module g-pt-section g-pb-med g-bg-color-azure wf-section">
+    <div class="si-section-module wf-section">
+      <h1 class="si-title-level-1">CMS Modules</h1>
+      <p class="si-paragraph">Instructions for modification here.</p>
+    </div>
+    <div class="si-section-module wf-section">
+      <h2 class="si-title-level-2">Module Rules / Guidelines</h2>
+      <p class="si-paragraph">* CMS modules follow same rules as content-modules.</p>
+    </div>
+    <div class="si-section-module wf-section">
+      <h2 class="si-title-level-2">Module example: CMS (with .content-container DIV)</h2>
+      <p class="si-paragraph">integrating CMS is similar to other modules – everything contained within .content-container.<br>however, content container can either be plan DIV (as usual) with CMS Collection List Wrapper directly inside as a content-item. Or the top Collection List Wrapper container can have class of .content-container directly.<br>The first setup is handy if you want to add more content-items at the same level as CMS Collection List, eg. a button<br><br>the CMS Collection Item (.cms-item), is the wrapper for all item content (images, titles, paragraphs, etc). This is where the &quot;display tile&quot; is created.<br><br>classes used when CMS Collection list is <em>inside of .content-container DIV</em>:<br><strong>.content-container</strong> (DIV)<br><strong>.cms-container</strong> (CMS Collection List Wrapper)<br><strong>.cms-grid</strong> (Collection List)<br><strong>.cms-item</strong> (Collection Item)<br><br>combo classes for .cms-grid:<br><strong>.cols-1111</strong><br><strong>.cols-2211</strong><br><strong>.cols-3211<br>.cols-3311<br>.grid-gap-0px</strong></p>
+    </div>
+    <div class="section-module g-bg-color-azure g-mb-lrg wf-section">
       <div class="w-layout-grid grid-module">
-        <div id="w-node-_05ed754c-403a-caae-63be-4d6e4c4db7a9-86cab2a7" class="content-container">
-          <h1 class="title-level-1 centered">In The News</h1>
+        <div id="w-node-_040964f9-22f3-4e49-656e-bb14871af58e-8163f47b" class="content-container">
+          <div id="w-node-_040964f9-22f3-4e49-656e-bb14871af58f-8163f47b" class="cms-container g-mb-med w-dyn-list">
+            <div role="list" class="cms-grid cols-1111 w-dyn-items">
+              <div role="listitem" class="cms-item g-mb-med w-dyn-item">
+                <h4 class="title-level-4"></h4>
+                <div class="cms-item-detail g-mb-med"></div>
+                <a href="#" class="cms-item-link">Read full press release</a>
+              </div>
+            </div>
+            <div class="w-dyn-empty">
+              <div>No items found.</div>
+            </div>
+          </div>
+          <a href="../press/press-releases.html" class="sm-button g-mx-auto w-inline-block">
+            <div class="sm-button-text smaller">see all press releases</div>
+          </a>
         </div>
       </div>
     </div>
-    <div class="section-module g-pb-section g-bg-color-azure wf-section">
+    <div class="section-module g-bg-color-grey wf-section">
       <div class="w-layout-grid grid-module">
-        <div id="w-node-a7f222e4-5bcd-bb19-c6ba-812a8cbeeb4c-86cab2a7" class="content-container w-dyn-list">
+        <div id="w-node-_801f55cb-9458-c920-0f39-889208a88371-8163f47b" class="content-container w-dyn-list">
+          <div role="list" class="cms-grid cols-1111 w-dyn-items">
+            <div role="listitem" class="cms-item g-mb-med w-dyn-item">
+              <h4 class="title-level-4"></h4>
+              <div class="cms-item-detail g-mb-med"></div>
+              <a href="#" class="cms-item-link">Read full press release</a>
+            </div>
+          </div>
+          <div class="w-dyn-empty">
+            <div>No items found.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-module g-bg-color-azure wf-section">
+      <div class="w-layout-grid grid-module">
+        <div id="w-node-e4df8044-13b8-dd87-76d1-798e6dd634cd-8163f47b" class="content-container">
+          <a href="../press/press-releases.html" class="sm-button g-mx-auto w-inline-block">
+            <div class="sm-button-text smaller">see all press releases</div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="si-section-module wf-section">
+      <h2 class="si-title-level-2">Module example: CMS (without .content-container DIV)</h2>
+      <p class="si-paragraph">classes used when top CMS Collection List Wrapper is the .content-container:<br><strong>.content-container</strong> (CMS Collection List Wrapper)<br><strong>.cms-grid</strong> (Collection List)<br><strong>.cms-item</strong> (Collection Item)<br>‍</p>
+    </div>
+    <div class="section-module g-bg-color-azure wf-section">
+      <div class="w-layout-grid grid-module">
+        <div id="w-node-_040964f9-22f3-4e49-656e-bb14871af5b1-8163f47b" class="content-container w-dyn-list">
+          <div role="list" class="cms-grid w-dyn-items">
+            <div role="listitem" class="cms-item g-mb-med w-dyn-item">
+              <div class="image-5-4-sma cms-image-wrap">
+                <div class="article-type-wrap">
+                  <div class="article-type-text"></div>
+                  <div class="article-type-text"></div>
+                  <div class="article-type-text"></div>
+                </div>
+              </div>
+              <h4 class="title-level-4"></h4>
+              <p class="paragraph-normal"></p>
+              <div class="flexbox-horiz-wrap g-mb-med">
+                <div class="cms-item-detail"></div>
+                <div class="cms-item-detail margin-right-sma">, </div>
+                <div class="cms-item-detail"></div>
+              </div>
+              <a href="#" class="cms-item-link">Read full story</a>
+            </div>
+          </div>
+          <div class="w-dyn-empty">
+            <div>No items found.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="si-section-module wf-section">
+      <h2 class="si-title-level-2">Module example: CMS (multiple row grid)</h2>
+      <p class="si-paragraph">usage</p>
+    </div>
+    <div class="section-module g-bg-color-azure wf-section">
+      <div class="w-layout-grid grid-module">
+        <div id="w-node-_13db6c95-a2eb-98be-8690-d6323d597b25-8163f47b" class="content-container w-dyn-list">
           <div role="list" class="cms-grid cols-3211 w-dyn-items">
             <div role="listitem" class="cms-item g-mb-lrg w-dyn-item">
               <div class="image-5-4-sma cms-image-wrap">
@@ -268,75 +302,29 @@
           <div class="w-dyn-empty">
             <div>No items found.</div>
           </div>
-          <div role="navigation" aria-label="List" class="w-pagination-wrapper">
-            <a href="#" aria-label="Previous Page" class="w-pagination-previous"><svg class="w-pagination-previous-icon" height="12px" width="12px" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 12 12" transform="translate(0, 1)">
-                <path fill="none" stroke="currentColor" fill-rule="evenodd" d="M8 10L4 6l4-4"></path>
-              </svg>
-              <div class="w-inline-block">Previous</div>
-            </a>
-            <a href="#" aria-label="Next Page" class="w-pagination-next">
-              <div class="w-inline-block">Next</div><svg class="w-pagination-next-icon" height="12px" width="12px" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 12 12" transform="translate(0, 1)">
-                <path fill="none" stroke="currentColor" fill-rule="evenodd" d="M4 2l4 4-4 4"></path>
-              </svg>
-            </a>
-          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="page-wrapper">
-    <div class="footer-module g-mb-lrg g-mt-lrg wf-section">
+    <div class="si-section-module wf-section">
+      <h2 class="si-title-level-2">Module example: CMS ()</h2>
+      <p class="si-paragraph">usage</p>
+    </div>
+    <div class="section-module g-bg-color-azure wf-section">
       <div class="w-layout-grid grid-module">
-        <div id="w-node-_26e7254b-3f70-cdc7-a48e-6e88c5026de1-c5026dde" class="footer-logo img-footer-logo g-mb-lrg"></div>
-        <div id="w-node-_26e7254b-3f70-cdc7-a48e-6e88c5026de2-c5026dde" class="content-container">
-          <div class="footer-menus-wrap">
-            <div class="footer-menu">
-              <h5 class="title-level-5 footer-header">EXPLORE</h5>
-              <a href="../index.html" class="footer-link w-inline-block">
-                <div class="footer-item">Home</div>
-              </a>
-              <a href="../about.html" class="footer-link w-inline-block">
-                <div class="footer-item">About</div>
-              </a>
-              <a href="../our-work.html" class="footer-link w-inline-block">
-                <div class="footer-item">Our Work</div>
-              </a>
-              <a href="../events.html" class="footer-link w-inline-block">
-                <div class="footer-item">Events</div>
-              </a>
-              <a href="../press.html" class="footer-link w-inline-block">
-                <div class="footer-item">Press</div>
-              </a>
-            </div>
-            <div class="footer-menu">
-              <h5 class="title-level-5 footer-header">help</h5>
-              <a href="../volunteer.html" class="footer-link w-inline-block">
-                <div class="footer-item">Volunteer</div>
-              </a>
-              <a href="https://secure.actblue.com/donate/income-movement-foundation" class="footer-link w-inline-block">
-                <div class="footer-item">Donate</div>
-              </a>
-            </div>
-            <div class="footer-menu">
-              <h5 class="title-level-5 footer-header">Social</h5>
-              <a href="https://twitter.com/income_movement" target="_blank" class="footer-link w-inline-block">
-                <div class="footer-item">Twitter</div>
-              </a>
-              <a href="https://www.instagram.com/incomemovement/" target="_blank" class="footer-link w-inline-block">
-                <div class="footer-item">Instagram</div>
-              </a>
-              <a href="https://www.facebook.com/IncomeMovement/" target="_blank" class="footer-link w-inline-block">
-                <div class="footer-item">Facebook</div>
-              </a>
+        <div id="w-node-_2a92d300-88ee-f502-fce5-c9db6fc6da75-8163f47b" class="content-container w-dyn-list">
+          <div role="list" class="cms-grid cols-1111 w-dyn-items">
+            <div role="listitem" class="grid-module w-dyn-item">
+              <div id="w-node-_4bea3ea9-1443-9558-567b-26ffd36eb67c-8163f47b" class="image-1-1-sma"></div>
+              <div id="w-node-f4157b9d-b16e-3954-ed11-ad984ef159ab-8163f47b" class="content-container">
+                <h1 id="w-node-c7acb4ef-3c8c-f00f-0a80-1cce9f048a6f-8163f47b"></h1>
+                <h4></h4>
+                <p></p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="footer-module g-pb-lrg wf-section">
-      <div class="w-layout-grid grid-module">
-        <div id="w-node-_26e7254b-3f70-cdc7-a48e-6e88c5026e0d-c5026dde" class="content-container">
-          <div class="footer-fine-print">The Income Movement Foundation is a 501(c)(3) organization.<br><br>Copyright © 2021-2022 Income Movement Foundation. All Rights Reserved<br></div>
+          <div class="w-dyn-empty">
+            <div>No items found.</div>
+          </div>
         </div>
       </div>
     </div>
