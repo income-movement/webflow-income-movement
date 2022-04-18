@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "unzip": "unzip -o ~/Downloads/im-3.webflow.zip -d ./src"
   },
   "repository": {
     "type": "git",
