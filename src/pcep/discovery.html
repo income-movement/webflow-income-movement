@@ -182,298 +182,7 @@
   }
 </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script type="text/javascript">
-// global vars
-const subNavVars = {
-  // info about menu items – width, start x, end x
-  menuItemsInfo: [],
-  // maximum scroll value
-  maxScroll: 0,
-  // current value of scroller position
-  scrollX: 0,
-  // index of selected menu item (does not change)
-  selectedIdx: -1,
-  // viewable width of scroller
-  subNavWidth: 0,
-  // total width of scroller
-  subNavScrollWidth: 0,
-  // index of left-side on-screen menu item
-  firstItemIdx: -1,
-  // index of right-side on-screen menu item
-  lastItemIdx: -1,
-  // timeout timer for throttling
-  throttle: null,
-  // flag to bypass throttling
-  immediateUpdate: false,
-  // jquery refs
-  jqContainer: null,
-  jqLinks: null,
-  jqLinksChildren: null,
-  jqBtnLeft: null,
-  jqBtnRight: null,
-};
-const initializeItems = function (vars) {
-  // find & save jquery references
-  const container = $('.subnav-container');
-  const jqLinks = container.find('.subnav-links');
-  const jqLinksChildren = jqLinks.children();
-  const leftBtn = container.find('.subnav-button.left-button');
-  const rightBtn = container.find('.subnav-button.right-button');
-  vars.jqContainer = container;
-  vars.jqLinks = jqLinks;
-  vars.jqLinksChildren = jqLinksChildren;
-  vars.jqBtnLeft = leftBtn;
-  vars.jqBtnRight = rightBtn;
-  // find & save index of selected menu item
-  const selectedChild = jqLinks.children('.w--current');
-  const selectedIdx = jqLinksChildren.index(selectedChild);
-  vars.selectedIdx = selectedIdx;
-  // add event handlers
-  leftBtn.click(function () {
-    scrollLeft(subNavVars);
-  });
-  rightBtn.click(function () {
-    scrollRight(subNavVars);
-  });
-  jqLinks.scroll(function (e) {
-    const target = e.target;
-    const immediate = subNavVars.immediateUpdate;
-    handleScroll(target, subNavVars, immediate);
-  });
-  $(window).resize(function () {
-    parseMenuItems(subNavVars);
-    // need to throttle here so no `immediateUpdate` flag
-    centerSelectedItem(subNavVars);
-  });
-};
-/*
-  parse items
-  on initial load or resize
-*/
-const parseMenuItems = function (vars) {
-  const jqLinks = vars.jqLinks;
-  const jqLinksChildren = vars.jqLinksChildren;
-  const jqBtnLeft = vars.jqBtnLeft;
-  const jqBtnRight = vars.jqBtnRight;
-  // get width and scrollWidth of links div
-  const subNavWidth = jqLinks.width();
-  const subNavScrollWidth = jqLinks.prop('scrollWidth');
-  const maxScroll = subNavScrollWidth - subNavWidth;
-  // always update in case css changes for different devices
-  // calc total and individual widths
-  let menuItemsInfo = [];
-  let totalWidth = 0;
-  jqLinksChildren.map(function () {
-    let w = $(this).outerWidth(true);
-    const s = {
-      width: w,
-      posx: totalWidth,
-      endx: totalWidth + w,
-    };
-    menuItemsInfo.push(s);
-    totalWidth += w;
-  });
-  // show/hide buttons
-  if (maxScroll == 0) {
-    jqBtnRight.addClass('g-hidden');
-    jqBtnLeft.addClass('g-hidden');
-  } else {
-    jqBtnRight.removeClass('g-hidden');
-    jqBtnLeft.removeClass('g-hidden');
-  }
-  // update vars
-  vars.subNavWidth = subNavWidth;
-  vars.subNavScrollWidth = subNavScrollWidth;
-  vars.menuItemsInfo = menuItemsInfo;
-  vars.maxScroll = maxScroll;
-};
-/*
-  center selected menu item
-  on initial load or resize
-*/
-const centerSelectedItem = function (vars) {
-  const menuItemsInfo = vars.menuItemsInfo;
-  const maxScroll = vars.maxScroll;
-  const subNavWidth = vars.subNavWidth;
-  const selectedIdx = vars.selectedIdx;
-  const jqLinks = vars.jqLinks;
-  if (maxScroll == 0) {
-    // display area is enough to show entire menu, so exit
-    return;
-  }
-  // calc scroll value & save
-  const midSubnav = subNavWidth / 2;
-  const cInfo = menuItemsInfo[selectedIdx];
-  let scrollX = cInfo.posx - midSubnav + cInfo.width / 2;
-  // constrain scrollX value
-  if (scrollX < 0) {
-    scrollX = 0;
-  } else if (scrollX > maxScroll) {
-    scrollX = maxScroll;
-  }
-  vars.scrollX = scrollX;
-  // if no movement, then need to force an update
-  const currentScrollX = jqLinks.scrollLeft();
-  if (currentScrollX == scrollX) {
-    doScrollUpdate(vars);
-  } else {
-    jqLinks.scrollLeft(scrollX);
-  }
-};
-/*
-  doScrollUpdate
-  perform UI updates
-  call after change in scrollX
-*/
-const doScrollUpdate = function (vars) {
-  findInView(vars);
-  updateInterface(vars);
-  vars.immediateUpdate = false;
-};
-/*
-  findInView
-  find menu elements currently in scroller view
-  on initial load or resize or menu movement
-*/
-const findInView = function (vars) {
-  const menuItemsInfo = vars.menuItemsInfo;
-  const subNavScrollWidth = vars.subNavScrollWidth;
-  const subNavWidth = vars.subNavWidth;
-  const scrollX = vars.scrollX;
-  const scrollEnd = subNavWidth + scrollX;
-  // setup
-  let firstIdx = -1;
-  let foundFirst = false;
-  let lastIdx = -1;
-  let foundLast = false;
-  // find first/last
-  const len = menuItemsInfo.length;
-  for (let idx = 0; idx < len; idx++) {
-    const item = menuItemsInfo[idx];
-    const posx = item.posx;
-    const endx = item.endx;
-    if (!foundFirst && scrollX <= posx) {
-      firstIdx = idx;
-      foundFirst = true;
-    }
-    //
-    if (!foundLast && scrollEnd >= endx) {
-      // check all until no more are larger
-      // so do not set 'foundLast' here
-      lastIdx = idx;
-    }
-    // add this check for safari, child widths are inaccurate
-    if (!foundLast && scrollEnd == subNavScrollWidth) {
-      lastIdx = len - 1;
-      foundLast = true;
-    }
-    if (foundFirst && foundLast) break;
-  }
-  // save values
-  vars.firstItemIdx = firstIdx;
-  vars.lastItemIdx = lastIdx;
-};
-/*
-  scrollRight
-  handler for right-arrow button – move menu one item to right
-  handleScroll will be automatically called after this
-*/
-const scrollRight = function (vars) {
-  const menuItemsInfo = vars.menuItemsInfo;
-  const subNavWidth = vars.subNavWidth;
-  const lastItemIdx = vars.lastItemIdx;
-  const jqLinks = vars.jqLinks;
-  // get next index from right-side and validate
-  const maxIdx = menuItemsInfo.length - 1;
-  const idx = lastItemIdx + 1;
-  if (idx > maxIdx) return;
-  // get child info, calc scrollX
-  const child = menuItemsInfo[idx];
-  const scrollX = child.endx - subNavWidth;
-  vars.scrollX = scrollX;
-  // scroll to new location
-  // jqLinks.scrollLeft(scrollX);
-  jqLinks.animate({ scrollLeft: scrollX }, { duration: 200 });
-};
-/*
-  scrollLeft
-  handler for right-arrow button – move menu one item to right
-  handleScroll will be automatically called after this
-*/
-const scrollLeft = function (vars) {
-  const menuItemsInfo = vars.menuItemsInfo;
-  const firstItemIdx = vars.firstItemIdx;
-  const jqLinks = vars.jqLinks;
-  // get previous index from left-side and validate
-  const idx = firstItemIdx - 1;
-  if (idx < 0) return;
-  // get child info, calc scrollX
-  const child = menuItemsInfo[idx];
-  const scrollX = child.posx;
-  vars.scrollX = scrollX;
-  // scroll to new location
-  // jqLinks.scrollLeft(scrollX);
-  jqLinks.animate({ scrollLeft: scrollX }, { duration: 200 });
-};
-/*
-  updateInterface
-  update interface elements
-*/
-const updateInterface = function (vars) {
-  const scrollX = vars.scrollX;
-  const maxScroll = vars.maxScroll;
-  const jqBtnLeft = vars.jqBtnLeft;
-  const jqBtnRight = vars.jqBtnRight;
-  // update arrow buttons enabled
-  if (scrollX <= 0) {
-    jqBtnLeft.addClass('disabled');
-    jqBtnRight.removeClass('disabled');
-  } else if (scrollX >= maxScroll) {
-    jqBtnLeft.removeClass('disabled');
-    jqBtnRight.addClass('disabled');
-  } else {
-    jqBtnRight.removeClass('disabled');
-    jqBtnLeft.removeClass('disabled');
-  }
-};
-/*
-  handleScroll
-  handler for touch-based or arrow-button scrolling
-  anytime the scroller position is changed, this is called
-  so calls to findInView() and updateInterface() are done here to
-  be more efficient
-  props:
-  * target
-  * vars
-  * immediate
-*/
-const handleScroll = function (target, vars, immediate) {
-  if (immediate) {
-    vars.scrollX = target.scrollLeft;
-    doScrollUpdate(vars);
-    return;
-  }
-  // check if throttle timer already active
-  if (vars.throttle !== null) return;
-  // throttle scroller updates
-  vars.throttle = setTimeout(function () {
-    // save current scroll position and update UI
-    vars.scrollX = target.scrollLeft;
-    doScrollUpdate(vars);
-    vars.throttle = null; // clear throttle timer
-  }, 100);
-};
-/*
-  main setup function
-*/
-$(document).ready(function () {
-  initializeItems(subNavVars);
-  // do initial update
-  parseMenuItems(subNavVars);
-  subNavVars.immediateUpdate = true;
-  centerSelectedItem(subNavVars);
-});
-</script>
+  <script type="text/javascript" src="https://imcom-code.netlify.app/pcep-subnav/script.js"></script>
 </head>
 <body>
   <div class="navbar_container">
@@ -531,28 +240,28 @@ $(document).ready(function () {
   </div>
   <div class="pcep-subnav-module wf-section">
     <div class="w-layout-grid subnav-grid">
-      <div id="w-node-_981d05be-6c1e-fbf8-66d7-d52ad164eb39-33510aae" class="subnav-container">
+      <div id="w-node-_851814ea-401c-4ce1-c88d-0fb2e7452033-33510aae" class="subnav-container">
         <a href="#" class="subnav-button left-button disabled w-inline-block">
           <div>❮</div>
         </a>
         <div class="subnav-scroll-wrap">
           <div class="subnav-links justify-center">
-            <a data-w-id="981d05be-6c1e-fbf8-66d7-d52ad164eb3f" href="../pcep/overview.html" class="subnav-link subnav-first-child w-inline-block">
+            <a data-w-id="851814ea-401c-4ce1-c88d-0fb2e7452039" href="../pcep/overview.html" class="subnav-link subnav-first-child w-inline-block">
               <div>Overview</div>
             </a>
-            <a data-w-id="981d05be-6c1e-fbf8-66d7-d52ad164eb42" href="../pcep/discovery.html" aria-current="page" class="subnav-link w-inline-block w--current">
+            <a data-w-id="851814ea-401c-4ce1-c88d-0fb2e745203c" href="../pcep/discovery.html" aria-current="page" class="subnav-link w-inline-block w--current">
               <div>1. discovery</div>
             </a>
-            <a data-w-id="981d05be-6c1e-fbf8-66d7-d52ad164eb45" href="../pcep/design.html" class="subnav-link w-inline-block">
+            <a data-w-id="851814ea-401c-4ce1-c88d-0fb2e745203f" href="../pcep/design.html" class="subnav-link w-inline-block">
               <div>2. design</div>
             </a>
-            <a data-w-id="981d05be-6c1e-fbf8-66d7-d52ad164eb48" href="../pcep/launch.html" class="subnav-link w-inline-block">
+            <a data-w-id="851814ea-401c-4ce1-c88d-0fb2e7452042" href="../pcep/launch.html" class="subnav-link w-inline-block">
               <div>3. launch</div>
             </a>
-            <a data-w-id="981d05be-6c1e-fbf8-66d7-d52ad164eb4b" href="../pcep/implementation.html" class="subnav-link w-inline-block">
+            <a data-w-id="851814ea-401c-4ce1-c88d-0fb2e7452045" href="../pcep/implementation.html" class="subnav-link w-inline-block">
               <div>4. implementation</div>
             </a>
-            <a data-w-id="981d05be-6c1e-fbf8-66d7-d52ad164eb4e" href="../pcep/analysis.html" class="subnav-link subnav-last-child w-inline-block">
+            <a data-w-id="851814ea-401c-4ce1-c88d-0fb2e7452048" href="../pcep/analysis.html" class="subnav-link subnav-last-child w-inline-block">
               <div>5. analysis</div>
             </a>
           </div>
